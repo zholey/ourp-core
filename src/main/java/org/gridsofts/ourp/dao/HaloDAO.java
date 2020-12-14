@@ -1,5 +1,8 @@
 package org.gridsofts.ourp.dao;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -34,7 +37,7 @@ public class HaloDAO extends SuperDAO {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	
+
 	/**
 	 * DAO实例化后，要进行初始化
 	 */
@@ -44,19 +47,19 @@ public class HaloDAO extends SuperDAO {
 
 			@Override
 			public Connection getConnection() throws ConnectionException {
-				
+
 				if (dataSource == null) {
 					throw new NullPointerException("dataSource is null");
 				}
-				
+
 				try {
 					Connection conn = dataSource.getConnection();
-					
+
 					// 设置 autoCommit = true
 					if (!conn.getAutoCommit()) {
 						conn.setAutoCommit(true);
 					}
-					
+
 					return conn;
 				} catch (SQLException e) {
 					throw new ConnectionException(e.getMessage());
@@ -71,6 +74,52 @@ public class HaloDAO extends SuperDAO {
 				} catch (Throwable e) {
 					logger.error(e.getMessage(), e);
 				}
-			}});
+			}
+		});
+
+		// 自动建表
+		String tablesPolicy = System.getProperty("ourp.tables.autocreate", "true");
+		if ("true".equalsIgnoreCase(tablesPolicy)) {
+			initTables();
+		}
+	}
+
+	public void initTables() {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("OURP 自动建表...");
+		}
+
+		try (BufferedInputStream inStream = new BufferedInputStream(
+				getClass().getResourceAsStream("/org/gridsofts/ourp/model/init-tables.sql"));
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();) {
+
+			byte[] buffer = new byte[4096];
+			int len = 0;
+			while ((len = inStream.read(buffer)) > 0) {
+				outStream.write(buffer, 0, len);
+			}
+			outStream.flush();
+
+			String createTablesSql = new String(outStream.toByteArray(), Charset.defaultCharset());
+
+			// 执行建表语句
+			String[] sqlAry = createTablesSql.split("\\s*;\\s*");
+			if (sqlAry != null && sqlAry.length > 0) {
+				for (int i = 0; i < sqlAry.length; i++) {
+					executeUpdate(sqlAry[i]);
+
+					if (logger.isDebugEnabled()) {
+						logger.debug(sqlAry[i]);
+					}
+				}
+			}
+
+			if (logger.isInfoEnabled()) {
+				logger.info("OURP 数据表创建完毕");
+			}
+		} catch (Throwable e) {
+			logger.error("OURP 数据表初始化异常", e);
+		}
 	}
 }

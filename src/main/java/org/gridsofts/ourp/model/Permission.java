@@ -13,7 +13,7 @@ import org.springframework.beans.BeanUtils;
  * 
  * @author lei
  */
-@Table(value = "OURP_PERMISSION", primaryKey = { "roleId" }, autoGenerateKeys = false)
+@Table(value = "OURP_PERMISSION", primaryKey = { "code" }, autoGenerateKeys = false)
 public class Permission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
