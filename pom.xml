@@ -15,6 +15,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.source>1.8</jdk.source>
 		<jdk.target>1.8</jdk.target>
+		
+		<springmvc.version>4.2.8.RELEASE</springmvc.version>
+		<swagger-annotation.version>1.6.2</swagger-annotation.version>
+		<halo.version>1.0.8</halo.version>
 	</properties>
 	
 	<distributionManagement>
@@ -38,16 +42,39 @@
 		    <version>1.7.30</version>
 		</dependency>
 		
+		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.2.8.RELEASE</version>
+			<version>${springmvc.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-expression</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
+		<!-- swagger -->
+		<dependency>
+		    <groupId>io.swagger</groupId>
+		    <artifactId>swagger-annotations</artifactId>
+		    <version>${swagger-annotation.version}</version>
+		</dependency>
+		
+		<!-- halo -->
 		<dependency>
 			<groupId>org.gridsofts</groupId>
 			<artifactId>halo</artifactId>
-			<version>1.0.7</version>
+			<version>${halo.version}</version>
 		</dependency>
 	</dependencies>
 	

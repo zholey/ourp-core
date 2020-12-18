@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
-import org.springframework.beans.BeanUtils;
+import org.gridsofts.halo.util.BeanUtil;
 
 /**
  * 组织机构
@@ -158,7 +158,7 @@ public class Organization implements Serializable {
 		}
 		
 		public TreeNode(Organization organization) {
-			BeanUtils.copyProperties(organization, this);
+			BeanUtil.copyProperties(organization, this);
 		}
 		
 		public boolean hasChildren() {

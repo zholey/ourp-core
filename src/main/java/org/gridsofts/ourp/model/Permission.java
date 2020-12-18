@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
-import org.springframework.beans.BeanUtils;
+import org.gridsofts.halo.util.BeanUtil;
 
 /**
  * 权限
@@ -81,7 +81,7 @@ public class Permission implements Serializable {
 		}
 		
 		public TreeNode(Permission permission) {
-			BeanUtils.copyProperties(permission, this);
+			BeanUtil.copyProperties(permission, this);
 		}
 		
 		public boolean hasChildren() {
