@@ -18,11 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 /**
  * 组织机构信息控制器
  * 
  * @author lei
  */
+@Api(tags = "组织机构信息控制器")
 @Controller
 @RequestMapping("/ourp/organization")
 public class OrgController {
@@ -37,8 +44,11 @@ public class OrgController {
 	 * @param model
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "页面跳转进入 ourp/organization/index 视图内"))
+	@ApiOperation("跳转进入组织机构管理首页；视图内可以获取  organizationList 类型为  List<Organization>")
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(Model model) {
+	public String index(@ApiParam(hidden = true) Model model) {
 
 		try {
 			// 查询数据库
@@ -55,6 +65,9 @@ public class OrgController {
 	 * 
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "组织机构信息列表；JSON数组"))
+	@ApiOperation("获取所有的组织机构信息")
+
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Organization> list() {
@@ -73,6 +86,9 @@ public class OrgController {
 	 * 
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "组织机构树根节点；JSON对象"))
+	@ApiOperation("获取组织机构树")
+
 	@ResponseBody
 	@RequestMapping(value = "/tree", method = RequestMethod.GET)
 	public TreeNode tree() {
@@ -112,9 +128,12 @@ public class OrgController {
 	 * @param orgId
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "组织机构信息；JSON对象"))
+	@ApiOperation("查找组织机构信息")
+
 	@ResponseBody
 	@RequestMapping(value = "/{orgId:.+}", method = RequestMethod.GET)
-	public Organization find(@PathVariable String orgId) {
+	public Organization find(@ApiParam(value = "路径变量；组织机构ID；", required = true) @PathVariable String orgId) {
 
 		try {
 			return orgService.find(orgId);
@@ -131,6 +150,9 @@ public class OrgController {
 	 * @param bean
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "OK - 创建成功；FAIL - 创建失败；其它异常信息"))
+	@ApiOperation("新建 组织机构信息")
+
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String create(Organization bean) {
@@ -152,6 +174,9 @@ public class OrgController {
 	 * @param bean
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "OK - 修改成功；FAIL - 修改失败；其它异常信息"))
+	@ApiOperation("修改 组织机构信息")
+
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public String update(Organization bean) {
@@ -179,9 +204,12 @@ public class OrgController {
 	 * @param ids 多个组织机构ID以“,”分隔
 	 * @return
 	 */
+	@ApiResponses(@ApiResponse(code = 200, message = "OK - 删除成功；FAIL - 删除失败；其它异常信息"))
+	@ApiOperation("批量删除组织机构信息")
+
 	@ResponseBody
 	@RequestMapping(value = "/{ids:.+}", method = RequestMethod.DELETE)
-	public String delete(@PathVariable String ids) {
+	public String delete(@ApiParam(value = "路径变量；组织机构ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
 			return orgService.remove(ids.split("\\s*\\,+\\s*")) ? "OK" : "FAIL";

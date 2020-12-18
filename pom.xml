@@ -17,7 +17,6 @@
 		<jdk.target>1.8</jdk.target>
 		
 		<springmvc.version>4.2.8.RELEASE</springmvc.version>
-		<swagger-annotation.version>1.6.2</swagger-annotation.version>
 		<halo.version>1.0.8</halo.version>
 	</properties>
 	
@@ -67,7 +66,7 @@
 		<dependency>
 		    <groupId>io.swagger</groupId>
 		    <artifactId>swagger-annotations</artifactId>
-		    <version>${swagger-annotation.version}</version>
+		    <version>1.6.2</version>
 		</dependency>
 		
 		<!-- halo -->

@@ -7,24 +7,32 @@ import java.util.stream.Stream;
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 角色
  * 
  * @author lei
  */
+@ApiModel(description = "角色信息实体类")
 @Table(value = "OURP_ROLE", primaryKey = { "roleId" }, autoGenerateKeys = false)
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty("角色ID；主键")
 	@Column("ROLE_ID")
 	private String roleId; // 角色ID；主键
 
+	@ApiModelProperty("角色名称")
 	@Column("ROLE_NAME")
 	private String roleName; // 角色名称
 
+	@ApiModelProperty("授权权限编码串；以“,”分隔")
 	@Column("AUTH_PERMISSIONS")
 	private String authPermissions; // 授权权限编码串；以“,”分隔
 
+	@ApiModelProperty("授权机构ID串；以“,”分隔")
 	@Column("AUTH_ORGANIZATIONS")
 	private String authOrganizations; // 授权机构ID串；以“,”分隔
 
@@ -51,7 +59,7 @@ public class Role implements Serializable {
 	 * @return
 	 */
 	public boolean containsPermission(String code) {
-		
+
 		if (code == null || getAuthPermissions() == null) {
 			return false;
 		}
@@ -75,7 +83,7 @@ public class Role implements Serializable {
 	 * @return
 	 */
 	public boolean containsOrganization(String orgId) {
-		
+
 		if (orgId == null || getAuthOrganizations() == null) {
 			return false;
 		}
@@ -91,21 +99,21 @@ public class Role implements Serializable {
 	public void setAuthOrganizations(String authOrganizations) {
 		this.authOrganizations = authOrganizations;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getRoleName();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		
+
 		if (obj == null || !(obj instanceof Role)) {
 			return false;
 		}
-		
+
 		Role target = (Role) obj;
-		
+
 		return getRoleId() != null && getRoleId().equals(target.getRoleId());
 	}
 }

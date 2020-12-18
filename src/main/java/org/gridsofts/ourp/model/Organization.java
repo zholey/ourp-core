@@ -8,42 +8,56 @@ import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
 import org.gridsofts.halo.util.BeanUtil;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 组织机构
  * 
  * @author lei
  */
+@ApiModel(description = "组织机构实体类")
 @Table(value = "OURP_ORGANIZATION", primaryKey = { "orgId" }, autoGenerateKeys = false)
 public class Organization implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty("机构ID；主键")
 	@Column("ORG_ID")
 	private String orgId; // 机构ID；主键
 
+	@ApiModelProperty("父级机构ID；外键；可空")
 	@Column("PRNT_ID")
 	private String prntId; // 父级机构ID；外键；可空
 
+	@ApiModelProperty("机构名称")
 	@Column("ORG_NAME")
 	private String orgName; // 机构名称
 
+	@ApiModelProperty("机构简称")
 	@Column("SHORT_NAME")
 	private String shortName; // 机构简称
 
+	@ApiModelProperty("机构性质")
 	@Column("ORG_NATURE")
 	private String orgNature; // 机构性质
 
+	@ApiModelProperty("简介")
 	@Column("INTRODUCTION")
 	private String introduction; // 简介
 
+	@ApiModelProperty("地址")
 	@Column("ADDRESS")
 	private String address; // 地址
 
+	@ApiModelProperty("邮编")
 	@Column("POSTCODE")
 	private String postcode; // 邮编
 
+	@ApiModelProperty("联系人")
 	@Column("CNTCT_PERSON")
 	private String cntctPerson; // 联系人
 
+	@ApiModelProperty("联系电话")
 	@Column("CNTCT_PHONE")
 	private String cntctPhone; // 联系电话
 
@@ -143,28 +157,30 @@ public class Organization implements Serializable {
 
 		return getOrgId() != null && getOrgId().equals(target.getOrgId());
 	}
-	
+
 	/**
 	 * 组织机构树节点
 	 * 
 	 * @author lei
 	 */
+	@ApiModel(description = "组织机构树节点")
 	public static class TreeNode extends Organization {
 		private static final long serialVersionUID = 1L;
 
+		@ApiModelProperty("子节点列表")
 		private List<TreeNode> children = new ArrayList<>(); // 子节点列表
-		
+
 		public TreeNode() {
 		}
-		
+
 		public TreeNode(Organization organization) {
 			BeanUtil.copyProperties(organization, this);
 		}
-		
+
 		public boolean hasChildren() {
 			return children.size() > 0;
 		}
-		
+
 		public void addChild(TreeNode node) {
 			children.add(node);
 		}
