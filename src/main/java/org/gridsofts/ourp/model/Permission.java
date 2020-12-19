@@ -79,11 +79,11 @@ public class Permission implements Serializable {
 	 * 
 	 * @author lei
 	 */
-	@ApiModel(description = "权限树节点")
+	@ApiModel(value = "Permission.TreeNode", description = "权限树节点")
 	public static class TreeNode extends Permission {
 		private static final long serialVersionUID = 1L;
 
-		@ApiModelProperty("子节点列表")
+		@ApiModelProperty(value = "子节点列表", dataType = "List<Permission.TreeNode>")
 		private List<TreeNode> children = new ArrayList<>(); // 子节点列表
 
 		public TreeNode() {

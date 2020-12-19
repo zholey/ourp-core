@@ -61,7 +61,7 @@ public class User implements Serializable {
 
 	@ApiModelProperty("是否有效（0-无效；1-有效）")
 	@Column("IS_VALID")
-	private Integer isValid; // 是否有效（0-无效；1-有效）
+	private Integer isValid = 1; // 是否有效（0-无效；1-有效）
 
 	public String getUserId() {
 		return userId;

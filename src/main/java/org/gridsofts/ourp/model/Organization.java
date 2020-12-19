@@ -163,11 +163,11 @@ public class Organization implements Serializable {
 	 * 
 	 * @author lei
 	 */
-	@ApiModel(description = "组织机构树节点")
+	@ApiModel(value = "Organization.TreeNode", description = "组织机构树节点")
 	public static class TreeNode extends Organization {
 		private static final long serialVersionUID = 1L;
 
-		@ApiModelProperty("子节点列表")
+		@ApiModelProperty(value = "子节点列表", dataType = "List<Organization.TreeNode>")
 		private List<TreeNode> children = new ArrayList<>(); // 子节点列表
 
 		public TreeNode() {
