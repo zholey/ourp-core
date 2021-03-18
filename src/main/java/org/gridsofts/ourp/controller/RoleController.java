@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiResponses;
  * @author lei
  */
 @Api(tags = "角色信息控制器")
-@Controller
+@Controller("_ourpRoleController")
 @RequestMapping("/ourp/role")
 public class RoleController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -116,11 +116,13 @@ public class RoleController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
-			return roleService.create(bean) ? "OK" : "FAIL";
+			return roleService.create(bean) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -140,17 +142,19 @@ public class RoleController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
 			// 先查找要修改的角色
 			Role target = roleService.find(bean.getRoleId());
 			if (target == null) {
-				throw new NullPointerException("not found");
+				return ("bean not found");
 			}
 
-			return roleService.update(target) ? "OK" : "FAIL";
+			return roleService.update(target) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -169,8 +173,10 @@ public class RoleController {
 	public String delete(@ApiParam(value = "路径变量；角色ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
-			return roleService.remove(ids.split("\\s*\\,+\\s*")) ? "OK" : "FAIL";
+			return roleService.remove(ids.split("\\s*\\,+\\s*")) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}

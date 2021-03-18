@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponses;
  * @author lei
  */
 @Api(tags = "组织机构信息控制器")
-@Controller
+@Controller("_ourpOrganizationController")
 @RequestMapping("/ourp/organization")
 public class OrgController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -55,11 +55,12 @@ public class OrgController {
 			model.addAttribute("organizationList", orgService.list());
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
+			model.addAttribute("organizationList", null);
 		}
 
 		return "ourp/organization/index";
 	}
-
+	
 	/**
 	 * 获取所有的组织机构信息
 	 * 
@@ -77,10 +78,10 @@ public class OrgController {
 		} catch (SrvException e) {
 			logger.error(e.getMessage(), e);
 		}
-
+		
 		return null;
 	}
-
+	
 	/**
 	 * 获取组织机构树
 	 * 
@@ -140,7 +141,7 @@ public class OrgController {
 		} catch (SrvException e) {
 			logger.error(e.getMessage(), e);
 		}
-
+		
 		return null;
 	}
 
@@ -159,11 +160,13 @@ public class OrgController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
-			return orgService.create(bean) ? "OK" : "FAIL";
+			return orgService.create(bean) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -183,7 +186,7 @@ public class OrgController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
 			// 先查找要修改的组织机构
@@ -192,8 +195,10 @@ public class OrgController {
 				throw new NullPointerException("not found");
 			}
 
-			return orgService.update(target) ? "OK" : "FAIL";
+			return orgService.update(target) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -209,11 +214,14 @@ public class OrgController {
 
 	@ResponseBody
 	@RequestMapping(value = "/{ids:.+}", method = RequestMethod.DELETE)
-	public String delete(@ApiParam(value = "路径变量；组织机构ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
+	public String delete(
+			@ApiParam(value = "路径变量；组织机构ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
-			return orgService.remove(ids.split("\\s*\\,+\\s*")) ? "OK" : "FAIL";
+			return orgService.remove(ids.split("\\s*\\,+\\s*")) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}

@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponses;
  * @author lei
  */
 @Api(tags = "权限信息控制器")
-@Controller
+@Controller("_ourpPermissionController")
 @RequestMapping("/ourp/permission")
 public class PermissionController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -161,11 +161,13 @@ public class PermissionController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
-			return permissionService.create(bean) ? "OK" : "FAIL";
+			return permissionService.create(bean) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -185,17 +187,19 @@ public class PermissionController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
 			// 先查找要修改的权限
 			Permission target = permissionService.find(bean.getCode());
 			if (target == null) {
-				throw new NullPointerException("not found");
+				return ("bean not found");
 			}
 
-			return permissionService.update(target) ? "OK" : "FAIL";
+			return permissionService.update(target) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -214,8 +218,10 @@ public class PermissionController {
 	public String delete(@ApiParam(value = "路径变量；权限ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
-			return permissionService.remove(ids.split("\\s*\\,+\\s*")) ? "OK" : "FAIL";
+			return permissionService.remove(ids.split("\\s*\\,+\\s*")) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}

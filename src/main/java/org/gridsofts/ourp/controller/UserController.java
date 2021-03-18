@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiResponses;
  * @author lei
  */
 @Api(tags = "用户信息控制器")
-@Controller
+@Controller("_ourpUserController")
 @RequestMapping("/ourp/user")
 public class UserController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -122,20 +122,22 @@ public class UserController {
 
 		try {
 			if (StringUtil.isNull(userId) || StringUtil.isNull(userPwd)) {
-				return "required parameter is null";
+				return ("required parameter is null");
 			}
 
 			// 先查找要修改的用户
 			User target = userService.find(userId);
 			if (target == null) {
-				throw new NullPointerException("not found");
+				return ("bean not found");
 			}
 
 			// 验证密码
 			String userDigestPwd = Encrypt.md5(userPwd);
 
-			return userDigestPwd.equals(target.getUserPwd()) ? "OK" : "FAIL";
+			return userDigestPwd.equals(target.getUserPwd()) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -155,15 +157,17 @@ public class UserController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
 			// 对密码进行“加密”
 			bean.setPwdDigestAlgorithm("MD5");
 			bean.setUserPwd(Encrypt.md5(bean.getUserPwd()));
 
-			return userService.create(bean) ? "OK" : "FAIL";
+			return userService.create(bean) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -183,20 +187,22 @@ public class UserController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
 			// 先查找要修改的用户
 			User target = userService.find(bean.getUserId());
 			if (target == null) {
-				throw new NullPointerException("not found");
+				return ("bean not found");
 			}
 
 			// 复制用户信息；跳过 userId, userPwd, pwdDigestAlgorithm 三个字段
 			BeanUtil.copyProperties(bean, target, new String[] { "userId", "userPwd", "pwdDigestAlgorithm" });
 
-			return userService.update(target) ? "OK" : "FAIL";
+			return userService.update(target) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -216,21 +222,23 @@ public class UserController {
 
 		try {
 			if (bean == null) {
-				throw new NullPointerException("bean is null");
+				return ("bean is null");
 			}
 
 			// 先查找要修改的用户
 			User target = userService.find(bean.getUserId());
 			if (target == null) {
-				throw new NullPointerException("not found");
+				return ("bean not found");
 			}
 
 			// 对密码进行“加密”
 			target.setPwdDigestAlgorithm("MD5");
 			target.setUserPwd(Encrypt.md5(bean.getUserPwd()));
 
-			return userService.update(target) ? "OK" : "FAIL";
+			return userService.update(target) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -249,8 +257,10 @@ public class UserController {
 	public String delete(@ApiParam(value = "路径变量；用户ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
-			return userService.remove(ids.split("\\s*\\,+\\s*")) ? "OK" : "FAIL";
+			return userService.remove(ids.split("\\s*\\,+\\s*")) ? ("OK") : ("FAIL");
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 	}
@@ -278,13 +288,15 @@ public class UserController {
 					result += userService.update(user) ? 1 : 0;
 				}
 
-				return result == userList.size() ? "OK" : "FAIL";
+				return result == userList.size() ? ("OK") : ("FAIL");
 			}
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 
-		return "FAIL";
+		return ("FAIL");
 	}
 
 	/**
@@ -310,12 +322,14 @@ public class UserController {
 					result += userService.update(user) ? 1 : 0;
 				}
 
-				return result == userList.size() ? "OK" : "FAIL";
+				return result == userList.size() ? ("OK") : ("FAIL");
 			}
 		} catch (SrvException e) {
+			logger.error(e.getMessage(), e);
+
 			return e.getMessage();
 		}
 
-		return "FAIL";
+		return ("FAIL");
 	}
 }
