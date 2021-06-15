@@ -93,10 +93,25 @@ public interface IEntityService<T, K> {
 				Condition.Param param = iteCondition.next();
 
 				StringBuffer str = new StringBuffer(BeanUtil.getColumnName(param.getName(), entityClass));
-				if (Condition.Param.Association.Exact.equals(param.getAssociation())) {
+				if (Condition.Param.Association.Equals.equals(param.getAssociation())) {
 					str.append(" = ? ");
-				} else {
-					str.append(" LIKE '%?%' ");
+					outParams.add(param.getValue());
+				} else if (Condition.Param.Association.NotEquals.equals(param.getAssociation())) {
+					str.append(" <> ? ");
+					outParams.add(param.getValue());
+				} else if (Condition.Param.Association.Like.equals(param.getAssociation())) {
+					str.append(" LIKE ? ");
+					outParams.add("%" + param.getValue() + "%");
+				} else if (Condition.Param.Association.LikeTo.equals(param.getAssociation())) {
+					str.append(" LIKE ? ");
+					outParams.add(param.getValue());
+				} else if (Condition.Param.Association.NotLike.equals(param.getAssociation())) {
+					str.append(" NOT LIKE ? ");
+					outParams.add("%" + param.getValue() + "%");
+				} else if (Condition.Param.Association.In.equals(param.getAssociation())) {
+					str.append(" IN (" + param.getValue() + ") ");
+				} else if (Condition.Param.Association.NotIn.equals(param.getAssociation())) {
+					str.append(" NOT IN (" + param.getValue() + ") ");
 				}
 				sectionSql.add(str.toString());
 
