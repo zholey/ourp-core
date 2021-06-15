@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
  * 
  * @author lei
  */
-@Api(tags = "权限信息控制器")
+@Api(tags = "OURP - 权限信息控制器")
 @Controller("_ourpPermissionController")
 @RequestMapping("/ourp/permission")
 public class PermissionController {

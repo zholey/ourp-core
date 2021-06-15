@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
  * 
  * @author lei
  */
-@Api(tags = "组织机构信息控制器")
+@Api(tags = "OURP - 组织机构信息控制器")
 @Controller("_ourpOrganizationController")
 @RequestMapping("/ourp/organization")
 public class OrgController {

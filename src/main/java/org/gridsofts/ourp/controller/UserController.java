@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
  * 
  * @author lei
  */
-@Api(tags = "用户信息控制器")
+@Api(tags = "OURP - 用户信息控制器")
 @Controller("_ourpUserController")
 @RequestMapping("/ourp/user")
 public class UserController {

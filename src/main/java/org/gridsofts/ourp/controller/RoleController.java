@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
  * 
  * @author lei
  */
-@Api(tags = "角色信息控制器")
+@Api(tags = "OURP - 角色信息控制器")
 @Controller("_ourpRoleController")
 @RequestMapping("/ourp/role")
 public class RoleController {
