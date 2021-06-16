@@ -2,7 +2,6 @@ package org.gridsofts.ourp.controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.gridsofts.halo.crud.SrvException;
@@ -40,7 +39,6 @@ public class OrgController extends AbstractCRUDController<Organization, String> 
 	private IOrganizationService<Organization> orgService;
 	
 	@Override
-	@PostConstruct
 	public void setCrudService() {
 		super.setCrudService(orgService);
 	}

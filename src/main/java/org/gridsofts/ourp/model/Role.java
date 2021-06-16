@@ -38,6 +38,7 @@ public class Role implements Serializable, IEntity<String> {
 	private String authOrganizations;
 
 	@Override
+	@ApiModelProperty(hidden = true)
 	public String getPK() {
 		return getRoleId();
 	}

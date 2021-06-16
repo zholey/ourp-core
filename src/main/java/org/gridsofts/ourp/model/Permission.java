@@ -35,6 +35,7 @@ public class Permission implements Serializable, IEntity<String> {
 	private String prntCode;
 
 	@Override
+	@ApiModelProperty(hidden = true)
 	public String getPK() {
 		return getCode();
 	}

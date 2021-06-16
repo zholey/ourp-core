@@ -65,6 +65,7 @@ public class User implements Serializable, IEntity<String> {
 	private Integer isValid = 1;
 
 	@Override
+	@ApiModelProperty(hidden = true)
 	public String getPK() {
 		return getUserId();
 	}

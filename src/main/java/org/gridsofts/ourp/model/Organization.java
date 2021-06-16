@@ -63,6 +63,7 @@ public class Organization implements Serializable, IEntity<String> {
 	private String cntctPhone;
 
 	@Override
+	@ApiModelProperty(hidden = true)
 	public String getPK() {
 		return getOrgId();
 	}

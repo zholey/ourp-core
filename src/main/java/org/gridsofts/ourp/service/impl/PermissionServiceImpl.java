@@ -1,6 +1,5 @@
 package org.gridsofts.ourp.service.impl;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.gridsofts.halo.crud.service.AbstractCRUDService;
@@ -18,15 +17,11 @@ import org.springframework.stereotype.Service;
 public class PermissionServiceImpl extends AbstractCRUDService<Permission, String>
 		implements IPermissionService<Permission> {
 
-	public PermissionServiceImpl() {
-		super(Permission.class);
-	}
-	
 	@Resource(name = "ourpHaloDAO")
 	private HaloDAO haloDAO;
 	
-	@PostConstruct
-	public void initDAO() {
+	@Override
+	public void setSuperDAO() {
 		super.setSuperDAO(haloDAO);
 	}
 }

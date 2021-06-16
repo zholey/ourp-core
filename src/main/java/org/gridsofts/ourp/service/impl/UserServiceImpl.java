@@ -1,6 +1,5 @@
 package org.gridsofts.ourp.service.impl;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.gridsofts.halo.crud.service.AbstractCRUDService;
@@ -17,15 +16,11 @@ import org.springframework.stereotype.Service;
 @Service("ourpUserService")
 public class UserServiceImpl extends AbstractCRUDService<User, String> implements IUserService<User> {
 
-	public UserServiceImpl() {
-		super(User.class);
-	}
-	
 	@Resource(name = "ourpHaloDAO")
 	private HaloDAO haloDAO;
 	
-	@PostConstruct
-	public void initDAO() {
+	@Override
+	public void setSuperDAO() {
 		super.setSuperDAO(haloDAO);
 	}
 }
