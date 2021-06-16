@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.gridsofts.halo.crud.SrvException;
+import org.gridsofts.halo.crud.CRUDException;
 import org.gridsofts.halo.crud.controller.AbstractCRUDController;
 import org.gridsofts.halo.util.StringUtil;
 import org.gridsofts.ourp.model.Organization;
@@ -89,7 +89,7 @@ public class OrgController extends AbstractCRUDController<Organization, String> 
 					_buildTree(rootNode, topNode, orgList);
 				});
 			}
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 		}
 

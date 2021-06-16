@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.gridsofts.halo.crud.SrvException;
+import org.gridsofts.halo.crud.CRUDException;
 import org.gridsofts.halo.crud.controller.AbstractCRUDController;
 import org.gridsofts.halo.util.BeanUtil;
 import org.gridsofts.halo.util.StringUtil;
@@ -99,7 +99,7 @@ public class UserController extends AbstractCRUDController<User, String> {
 			String userDigestPwd = Encrypt.md5(userPwd);
 
 			return userDigestPwd.equals(target.getUserPwd()) ? ("OK") : ("FAIL");
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 
 			return e.getMessage();
@@ -130,7 +130,7 @@ public class UserController extends AbstractCRUDController<User, String> {
 			bean.setUserPwd(Encrypt.md5(bean.getUserPwd()));
 
 			return userService.create(bean) ? ("OK") : ("FAIL");
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 
 			return e.getMessage();
@@ -166,7 +166,7 @@ public class UserController extends AbstractCRUDController<User, String> {
 			BeanUtil.copyProperties(bean, target, new String[] { "userId", "userPwd", "pwdDigestAlgorithm" });
 
 			return userService.update(target) ? ("OK") : ("FAIL");
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 
 			return e.getMessage();
@@ -202,7 +202,7 @@ public class UserController extends AbstractCRUDController<User, String> {
 			target.setUserPwd(Encrypt.md5(bean.getUserPwd()));
 
 			return userService.update(target) ? ("OK") : ("FAIL");
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 
 			return e.getMessage();
@@ -234,7 +234,7 @@ public class UserController extends AbstractCRUDController<User, String> {
 
 				return result == userList.size() ? ("OK") : ("FAIL");
 			}
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 
 			return e.getMessage();
@@ -268,7 +268,7 @@ public class UserController extends AbstractCRUDController<User, String> {
 
 				return result == userList.size() ? ("OK") : ("FAIL");
 			}
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 
 			return e.getMessage();

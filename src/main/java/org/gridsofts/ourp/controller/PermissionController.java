@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.gridsofts.halo.crud.SrvException;
+import org.gridsofts.halo.crud.CRUDException;
 import org.gridsofts.halo.crud.controller.AbstractCRUDController;
 import org.gridsofts.halo.util.StringUtil;
 import org.gridsofts.ourp.model.Permission;
@@ -89,7 +89,7 @@ public class PermissionController extends AbstractCRUDController<Permission, Str
 							_buildTree(rootNode, topNode, permissionList);
 						});
 			}
-		} catch (SrvException e) {
+		} catch (CRUDException e) {
 			logger.error(e.getMessage(), e);
 		}
 
