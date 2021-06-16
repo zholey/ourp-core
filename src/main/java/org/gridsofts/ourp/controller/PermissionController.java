@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiResponses;
 public class PermissionController extends AbstractCRUDController<Permission, String> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Resource(name = "ourpPermissionService")
+	@Resource(name = "_ourpPermissionService")
 	private IPermissionService<Permission> permissionService;
 
 	@Override

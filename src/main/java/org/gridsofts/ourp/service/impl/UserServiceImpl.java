@@ -3,7 +3,7 @@ package org.gridsofts.ourp.service.impl;
 import javax.annotation.Resource;
 
 import org.gridsofts.halo.crud.service.AbstractCRUDService;
-import org.gridsofts.ourp.dao.HaloDAO;
+import org.gridsofts.ourp.dao.OurpDAO;
 import org.gridsofts.ourp.model.User;
 import org.gridsofts.ourp.service.IUserService;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
  * 
  * @author lei
  */
-@Service("ourpUserService")
+@Service("_ourpUserService")
 public class UserServiceImpl extends AbstractCRUDService<User, String> implements IUserService<User> {
 
-	@Resource(name = "ourpHaloDAO")
-	private HaloDAO haloDAO;
+	@Resource(name = "_ourpDAO")
+	private OurpDAO haloDAO;
 	
 	@Override
 	public void setSuperDAO() {

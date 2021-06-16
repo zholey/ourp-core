@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiResponses;
 public class UserController extends AbstractCRUDController<User, String> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Resource(name = "ourpUserService")
+	@Resource(name = "_ourpUserService")
 	private IUserService<User> userService;
 
 	@Override

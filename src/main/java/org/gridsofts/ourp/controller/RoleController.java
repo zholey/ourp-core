@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 public class RoleController extends AbstractCRUDController<Role, String> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Resource(name = "ourpRoleService")
+	@Resource(name = "_ourpRoleService")
 	private IRoleService<Role> roleService;
 
 	@Override

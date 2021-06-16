@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
  * 
  * @author lei
  */
-@Component("ourpHaloDAO")
-public class HaloDAO extends SuperDAO {
+@Component("_ourpDAO")
+public class OurpDAO extends SuperDAO {
 	private static final long serialVersionUID = 1L;
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 

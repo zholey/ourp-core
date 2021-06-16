@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiResponses;
 public class OrgController extends AbstractCRUDController<Organization, String> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Resource(name = "ourpOrganizationService")
+	@Resource(name = "_ourpOrganizationService")
 	private IOrganizationService<Organization> orgService;
 	
 	@Override
