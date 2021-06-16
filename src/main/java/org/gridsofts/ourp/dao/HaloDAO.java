@@ -87,7 +87,7 @@ public class HaloDAO extends SuperDAO {
 	public void initTables() {
 
 		if (logger.isInfoEnabled()) {
-			logger.info("OURP 自动建表...");
+			logger.info("OURP 检查数据库表是否存在，如不存在则自动创建...");
 		}
 
 		try (BufferedInputStream inStream = new BufferedInputStream(
@@ -116,7 +116,7 @@ public class HaloDAO extends SuperDAO {
 			}
 
 			if (logger.isInfoEnabled()) {
-				logger.info("OURP 数据表创建完毕");
+				logger.info("OURP 数据表检查完毕");
 			}
 		} catch (Throwable e) {
 			logger.error("OURP 数据表初始化异常", e);
