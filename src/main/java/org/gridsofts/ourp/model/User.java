@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
+import org.gridsofts.halo.crud.IEntity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,20 +16,20 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "用户信息实体类")
 @Table(value = "OURP_USER", primaryKey = { "userId" }, autoGenerateKeys = false)
-public class User implements Serializable {
+public class User implements Serializable, IEntity<String> {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty("用户ID；主键")
 	@Column("USER_ID")
-	private String userId; // 用户ID；主键
+	private String userId;
 
 	@ApiModelProperty("登录密码")
 	@Column("USER_PWD")
-	private String userPwd; // 登录密码
+	private String userPwd;
 
 	@ApiModelProperty("密码摘要算法名称（MD5、SHA1）")
 	@Column("PWD_DIGEST_ALGORITHM")
-	private String pwdDigestAlgorithm; // 密码摘要算法名称（MD5、SHA1）
+	private String pwdDigestAlgorithm;
 
 	/**************************************************************/
 	/** 以下是用户附属资料 ****************************************/
@@ -36,32 +37,37 @@ public class User implements Serializable {
 
 	@ApiModelProperty("姓")
 	@Column("FIRST_NAME")
-	private String firstName; // 姓
+	private String firstName;
 	@ApiModelProperty("名")
 	@Column("LAST_NAME")
-	private String lastName; // 名
+	private String lastName;
 
 	@ApiModelProperty("妮称")
 	@Column("NICK_NAME")
-	private String nickName; // 妮称
+	private String nickName;
 
 	@ApiModelProperty("身份证号")
 	@Column("IDCARD")
-	private String idcard; // 身份证号
+	private String idcard;
 
 	@ApiModelProperty("电子邮箱")
 	@Column("EMAIL")
-	private String email; // 电子邮箱
+	private String email;
 	@ApiModelProperty("电话号码")
 	@Column("PHONE")
-	private String phone; // 电话号码
+	private String phone;
 	@ApiModelProperty("联系地址")
 	@Column("ADDRESS")
-	private String address; // 联系地址
+	private String address;
 
 	@ApiModelProperty("是否有效（0-无效；1-有效）")
 	@Column("IS_VALID")
-	private Integer isValid = 1; // 是否有效（0-无效；1-有效）
+	private Integer isValid = 1;
+
+	@Override
+	public String getPK() {
+		return getUserId();
+	}
 
 	public String getUserId() {
 		return userId;

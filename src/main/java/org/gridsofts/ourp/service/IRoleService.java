@@ -1,5 +1,6 @@
 package org.gridsofts.ourp.service;
 
+import org.gridsofts.halo.crud.IEntityService;
 import org.gridsofts.ourp.model.Role;
 
 /**

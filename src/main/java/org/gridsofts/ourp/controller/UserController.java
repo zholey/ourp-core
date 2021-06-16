@@ -1,12 +1,14 @@
 package org.gridsofts.ourp.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.gridsofts.halo.crud.SrvException;
+import org.gridsofts.halo.crud.controller.AbstractCRUDController;
 import org.gridsofts.halo.util.BeanUtil;
 import org.gridsofts.halo.util.StringUtil;
-import org.gridsofts.ourp.exception.SrvException;
 import org.gridsofts.ourp.model.User;
 import org.gridsofts.ourp.service.IUserService;
 import org.gridsofts.ourp.utils.Encrypt;
@@ -34,11 +36,16 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "OURP - 用户信息控制器")
 @Controller("_ourpUserController")
 @RequestMapping("/ourp/user")
-public class UserController {
+public class UserController extends AbstractCRUDController<User, String> {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Resource(name = "ourpUserService")
 	private IUserService<User> userService;
+
+	@Override
+	public void setCrudService() {
+		super.setCrudService(userService);
+	}
 
 	/**
 	 * 跳转进入用户管理首页
@@ -47,7 +54,7 @@ public class UserController {
 	 * @return
 	 */
 	@ApiResponses(@ApiResponse(code = 200, message = "页面跳转进入 ourp/user/index 视图内"))
-	@ApiOperation("跳转进入用户管理首页；视图内可以获取  userList 类型为  List<User>")
+	@ApiOperation("MVC视图跳转进入用户管理首页；视图内可以获取  userList 类型为  List<User>")
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(@ApiParam(hidden = true) Model model) {
@@ -60,49 +67,6 @@ public class UserController {
 		}
 
 		return "ourp/user/index";
-	}
-
-	/**
-	 * 获取所有的用户信息
-	 * 
-	 * @return
-	 */
-	@ApiResponses(@ApiResponse(code = 200, message = "用户信息列表；JSON数组"))
-	@ApiOperation("获取所有的用户信息")
-
-	@ResponseBody
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<User> list() {
-
-		try {
-			return userService.list();
-		} catch (SrvException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return null;
-	}
-
-	/**
-	 * 查找用户信息
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	@ApiResponses(@ApiResponse(code = 200, message = "用户信息；JSON对象"))
-	@ApiOperation("查找用户信息")
-
-	@ResponseBody
-	@RequestMapping(value = "/{userId:.+}", method = RequestMethod.GET)
-	public User find(@ApiParam(value = "路径变量；用户ID；", required = true) @PathVariable String userId) {
-
-		try {
-			return userService.find(userId);
-		} catch (SrvException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return null;
 	}
 
 	/**
@@ -151,6 +115,7 @@ public class UserController {
 	@ApiResponses(@ApiResponse(code = 200, message = "OK - 创建成功；FAIL - 创建失败；其它异常信息"))
 	@ApiOperation("新建 用户信息")
 
+	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String create(User bean) {
@@ -181,6 +146,7 @@ public class UserController {
 	@ApiResponses(@ApiResponse(code = 200, message = "OK - 修改成功；FAIL - 修改失败；其它异常信息"))
 	@ApiOperation("修改 用户信息；不修改 userId, userPwd, pwdDigestAlgorithm 三个字段")
 
+	@Override
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public String update(User bean) {
@@ -244,28 +210,6 @@ public class UserController {
 	}
 
 	/**
-	 * 批量删除用户信息
-	 * 
-	 * @param ids 多个用户ID以“,”分隔
-	 * @return
-	 */
-	@ApiResponses(@ApiResponse(code = 200, message = "OK - 删除成功；FAIL - 删除失败；其它异常信息"))
-	@ApiOperation("批量删除用户信息")
-
-	@ResponseBody
-	@RequestMapping(value = "/{ids:.+}", method = RequestMethod.DELETE)
-	public String delete(@ApiParam(value = "路径变量；用户ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
-
-		try {
-			return userService.remove(ids.split("\\s*\\,+\\s*")) ? ("OK") : ("FAIL");
-		} catch (SrvException e) {
-			logger.error(e.getMessage(), e);
-
-			return e.getMessage();
-		}
-	}
-
-	/**
 	 * 批量停用用户信息
 	 * 
 	 * @param ids 多个用户ID以“,”分隔
@@ -279,7 +223,7 @@ public class UserController {
 	public String disable(@ApiParam(value = "路径变量；用户ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
-			List<User> userList = userService.findAll(ids.split("\\s*,+\\s*"));
+			List<User> userList = userService.findAll(Arrays.asList(ids.split("\\s*,+\\s*")));
 			if (userList != null && !userList.isEmpty()) {
 				int result = 0;
 
@@ -313,7 +257,7 @@ public class UserController {
 	public String enable(@ApiParam(value = "路径变量；用户ID；多个ID以“,”分隔", required = true) @PathVariable String ids) {
 
 		try {
-			List<User> userList = userService.findAll(ids.split("\\s*,+\\s*"));
+			List<User> userList = userService.findAll(Arrays.asList(ids.split("\\s*,+\\s*")));
 			if (userList != null && !userList.isEmpty()) {
 				int result = 0;
 

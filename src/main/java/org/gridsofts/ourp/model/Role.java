@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
+import org.gridsofts.halo.crud.IEntity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,24 +18,29 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "角色信息实体类")
 @Table(value = "OURP_ROLE", primaryKey = { "roleId" }, autoGenerateKeys = false)
-public class Role implements Serializable {
+public class Role implements Serializable, IEntity<String> {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty("角色ID；主键")
 	@Column("ROLE_ID")
-	private String roleId; // 角色ID；主键
+	private String roleId;
 
 	@ApiModelProperty("角色名称")
 	@Column("ROLE_NAME")
-	private String roleName; // 角色名称
+	private String roleName;
 
 	@ApiModelProperty("授权权限编码串；以“,”分隔")
 	@Column("AUTH_PERMISSIONS")
-	private String authPermissions; // 授权权限编码串；以“,”分隔
+	private String authPermissions;
 
 	@ApiModelProperty("授权机构ID串；以“,”分隔")
 	@Column("AUTH_ORGANIZATIONS")
-	private String authOrganizations; // 授权机构ID串；以“,”分隔
+	private String authOrganizations;
+
+	@Override
+	public String getPK() {
+		return getRoleId();
+	}
 
 	public String getRoleId() {
 		return roleId;

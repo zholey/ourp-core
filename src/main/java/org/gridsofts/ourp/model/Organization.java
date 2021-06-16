@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
+import org.gridsofts.halo.crud.IEntity;
 import org.gridsofts.halo.util.BeanUtil;
 
 import io.swagger.annotations.ApiModel;
@@ -18,48 +19,53 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "组织机构实体类")
 @Table(value = "OURP_ORGANIZATION", primaryKey = { "orgId" }, autoGenerateKeys = false)
-public class Organization implements Serializable {
+public class Organization implements Serializable, IEntity<String> {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty("机构ID；主键")
 	@Column("ORG_ID")
-	private String orgId; // 机构ID；主键
+	private String orgId;
 
 	@ApiModelProperty("父级机构ID；外键；可空")
 	@Column("PRNT_ID")
-	private String prntId; // 父级机构ID；外键；可空
+	private String prntId;
 
 	@ApiModelProperty("机构名称")
 	@Column("ORG_NAME")
-	private String orgName; // 机构名称
+	private String orgName;
 
 	@ApiModelProperty("机构简称")
 	@Column("SHORT_NAME")
-	private String shortName; // 机构简称
+	private String shortName;
 
 	@ApiModelProperty("机构性质")
 	@Column("ORG_NATURE")
-	private String orgNature; // 机构性质
+	private String orgNature;
 
 	@ApiModelProperty("简介")
 	@Column("INTRODUCTION")
-	private String introduction; // 简介
+	private String introduction;
 
 	@ApiModelProperty("地址")
 	@Column("ADDRESS")
-	private String address; // 地址
+	private String address;
 
 	@ApiModelProperty("邮编")
 	@Column("POSTCODE")
-	private String postcode; // 邮编
+	private String postcode;
 
 	@ApiModelProperty("联系人")
 	@Column("CNTCT_PERSON")
-	private String cntctPerson; // 联系人
+	private String cntctPerson;
 
 	@ApiModelProperty("联系电话")
 	@Column("CNTCT_PHONE")
-	private String cntctPhone; // 联系电话
+	private String cntctPhone;
+
+	@Override
+	public String getPK() {
+		return getOrgId();
+	}
 
 	public String getOrgId() {
 		return orgId;

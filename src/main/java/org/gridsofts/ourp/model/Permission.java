@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.gridsofts.halo.annotation.Column;
 import org.gridsofts.halo.annotation.Table;
+import org.gridsofts.halo.crud.IEntity;
 import org.gridsofts.halo.util.BeanUtil;
 
 import io.swagger.annotations.ApiModel;
@@ -18,20 +19,25 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "权限信息实体类")
 @Table(value = "OURP_PERMISSION", primaryKey = { "code" }, autoGenerateKeys = false)
-public class Permission implements Serializable {
+public class Permission implements Serializable, IEntity<String> {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty("权限编码；主键")
 	@Column("CODE")
-	private String code; // 权限编码；主键
+	private String code;
 
 	@ApiModelProperty("权限名称")
 	@Column("NAME")
-	private String name; // 权限名称
+	private String name;
 
 	@ApiModelProperty("父级权限编码")
 	@Column("PRNT_CODE")
-	private String prntCode; // 父级权限编码
+	private String prntCode;
+
+	@Override
+	public String getPK() {
+		return getCode();
+	}
 
 	public String getCode() {
 		return code;
